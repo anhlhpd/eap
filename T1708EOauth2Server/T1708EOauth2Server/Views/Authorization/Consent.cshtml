@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewData["Title"] = "Consent";
+    var scopes = ViewData["scopes"];
+    var currentApp = ViewData["currentApp"] as RegisterApplication;
+    var listRequestScopes = ViewData["listRequestScopes"] as List<CredentialScope>;
+    var redirectUrl = ViewData["redirectUrl"];
+}
+
+<h2><img src="@currentApp.Logo" />@currentApp.Name wants to access your Ho Account</h2>
+<ul>  
+    <form action="PostConsent" method="post">
+        <input type="hidden" name="redirectUlr" value="@redirectUrl"/>
+        <input type="hidden" name="clientId" value="@currentApp.Id" />
+        <input type="hidden" name="scopes" value="@scopes" />
+        @foreach (var scope in listRequestScopes)
+        {
+            <li><img src="@scope.Icon" />@scope.Name</li>
+        }
+        <input type="submit" name="btnSubmit" value="Allow" />
+        <input type="button" name="btnCancel" value="Cancel" />
+    </form>
+</ul>
+
